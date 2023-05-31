@@ -5,10 +5,12 @@ import Link from 'next/link';
 const Layout = ({ children }: any) => {
   return (
     <div className="h-full">
-      <Link href={'/'} className='flex justify-center items-center mb-4 py-8'>
+      <div className='flex justify-center items-center w-full shadow-sm mb-4 pt-4'>
+      <Link href={'/'} className='flex justify-center items-center mb-4  w-fit'>
         <Image src="/images/shop-senses.png" alt='logo' width={200} height={80}  className="brightness-105 contrast-115" />
       </Link>
-      <div className="flex justify-center">{children}</div>
+      </div>
+      <div className="flex justify-center w-full">{children}</div>
     </div>
   );
 };
