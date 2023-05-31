@@ -1,6 +1,6 @@
 This is a hobby project that I have recently started and there is still much more to come.
 
-"Expense Cutter" is a web application aimed at assisting users in reducing excessive spending while traveling by keeping track of the weight of their shopping items. It offers a user-friendly interface that allows users to effortlessly monitor the weight of their purchases, empowering them to make informed decisions and effectively manage their expenses. 
+"Expense Escape" is a web application aimed at assisting users in reducing excessive spending while traveling by keeping track of the weight of their shopping items. It offers a user-friendly interface that allows users to effortlessly monitor the weight of their purchases, empowering them to make informed decisions and effectively manage their expenses. 
 
 Stay tuned for exciting updates and enhancements as I continue to develop and refine this project.
 
