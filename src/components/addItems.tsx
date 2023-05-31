@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import { notebookTable } from "@/database.config";
 interface NoteProps {
   [key: string]: any;
 }
@@ -13,56 +13,6 @@ const AddItems = ({ notebook, setNotebook }: Notebook) => {
   const [itemName, setItemName] = useState("");
   const [itemWeight, setItemWeight] = useState<number | string>(0);
   const [unit, setUnit] = useState("kg");
-
-  const addItem = () => {
-    const newItem = {
-      name: itemName,
-      weight: convertWeightToKg(itemWeight),
-    };
-
-    const request = indexedDB.open("notebookDB", 1);
-
-    request.onerror = (event: any) => {
-      console.log("IndexedDB error:", event.target.error);
-    };
-
-    request.onsuccess = (event: any) => {
-      const db = event.target.result;
-
-      const transaction = db
-        .transaction("notebooks", "readwrite")
-        .objectStore("notebooks");
-      const getRequest = transaction.get(notebook.id);
-
-      console.log("Notebook retrieved from IndexedDB", getRequest);
-
-      getRequest.onsuccess = (event: any) => {
-        const existingNotebook = event.target.result;
-
-        const updatedNotebook = {
-          ...existingNotebook,
-          items: [...(existingNotebook?.items ?? []), newItem],
-        };
-
-        const putRequest = transaction.put(updatedNotebook);
-
-        putRequest.onsuccess = (event: any) => {
-          console.log("Notebook updated in IndexedDB");
-          setNotebook(updatedNotebook);
-          setItemName("");
-          setItemWeight(0);
-        };
-
-        putRequest.onerror = (event: any) => {
-          console.log("IndexedDB put error:", event.target.error);
-        };
-      };
-
-      getRequest.onerror = (event: any) => {
-        console.log("IndexedDB get error:", event.target.error);
-      };
-    };
-  };
 
   const convertWeightToKg = (weight: number | string): number => {
     if (unit === "kg") {
@@ -85,6 +35,19 @@ const AddItems = ({ notebook, setNotebook }: Notebook) => {
   };
 
   const maxWeight = 20; // Define maximum weight limit
+
+  const addItem = async() => {
+    const newItem = {
+      name: itemName,
+      weight: convertWeightToKg(itemWeight),
+    };
+    await notebookTable.update(notebook.id, {items: [...(notebook?.items ?? []), newItem]});
+    console.log("updated");
+    setItemName("");
+    setItemWeight(0);
+    setUnit("kg");  
+    
+  };
 
   return (
     <div className="flex justify-center w-full mb-4">

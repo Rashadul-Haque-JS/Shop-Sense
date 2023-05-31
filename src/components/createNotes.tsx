@@ -3,6 +3,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { FaCalendarAlt } from "react-icons/fa";
 import { v4 as uuidv4 } from "uuid";
+import {notebookTable} from "../../src/database.config";
 
 interface NoteProps {
   [key: string]: any;
@@ -18,7 +19,7 @@ const CreateNote = ({ setNotebook }: Notebook) => {
   const [date, setDate] = useState<Date | null>(null);
   const [text, setText] = useState("");
 
-  const createNotebook = () => {
+  const createNotebook = async() => {
     setText("");
     const newNotebook = {
         id: uuidv4(), // Generate a unique ID for the notebook
@@ -31,47 +32,9 @@ const CreateNote = ({ setNotebook }: Notebook) => {
     if (!name || !destination || !date) {
       setText("Please fill out all fields");
     } else {
-      // Opening the IndexedDB database
-      const request = window.indexedDB.open("notebookDB", 1);
-  
-      request.onerror = () => {
-        console.error("Error opening database");
-      };
-  
-      request.onupgradeneeded = (event: any) => {
-        const db = event.target.result;
-  
-        // Creating the "notebooks" object store if it doesn't exist
-        if (!db.objectStoreNames.contains("notebooks")) {
-          const objectStore = db.createObjectStore("notebooks", { keyPath: "id", autoIncrement: true });
-          // Add an index for searching notebooks by name
-          objectStore.createIndex("nameIndex", "name", { unique: false });
-        }
-      };
-  
-      request.onsuccess = (event: any) => {
-        const db = event.target.result;
-  
-        // Creating a transaction and accessing the object store
-        const transaction = db.transaction(["notebooks"], "readwrite");
-        const objectStore = transaction.objectStore("notebooks");
-        console.log("Notebook retrieved from IndexedDB", objectStore);
-  
-        // Adding the new notebook to the object store
-        const addRequest = objectStore.add(newNotebook);
-  
-        addRequest.onsuccess = (event: any) => {
-          const addedNotebook = event.target.result;
-          console.log("Notebook added to IndexedDB", addedNotebook);
-          setNotebook(newNotebook);
-          localStorage.setItem("notebook", JSON.stringify(newNotebook.id));
-        };
-  
-        addRequest.onerror = () => {
-          console.error("Error adding notebook to IndexedDB");
-        };
-      };
-  
+        const id = await notebookTable.add(newNotebook);
+        localStorage.setItem("notebook", JSON.stringify(id));
+        setNotebook(newNotebook);
       setName("");
       setDestination("");
       setDate(null);
