@@ -3,12 +3,9 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { FaCalendarAlt } from "react-icons/fa";
 import { v4 as uuidv4 } from "uuid";
-import {notebookTable} from "../../src/database.config";
-
-interface NoteProps {
-  [key: string]: any;
-}
-
+import { notebookTable } from "../../src/database.config";
+import { NoteProps } from "@/types/types";
+import { currencies } from "@/utils/currency";
 interface Notebook {
   setNotebook: (notebook: NoteProps) => void;
 }
@@ -17,30 +14,34 @@ const CreateNote = ({ setNotebook }: Notebook) => {
   const [name, setName] = useState("");
   const [destination, setDestination] = useState("");
   const [date, setDate] = useState<Date | null>(null);
+  const [maxWeight, setMaxWeight] = useState<number | string>();
+  const [currency, setCurrency] = useState<string>();
   const [text, setText] = useState("");
 
-  const createNotebook = async() => {
+  const createNotebook = async () => {
     setText("");
     const newNotebook = {
-        id: uuidv4(), // Generate a unique ID for the notebook
-        name,
-        destination,
-        date: date?.toISOString().split("T")[0] || "",
-        items: [],
-      };
-  
-    if (!name || !destination || !date) {
+      id: uuidv4(), // Generate a unique ID for the notebook
+      name,
+      destination,
+      date: date?.toISOString().split("T")[0] || "",
+      items: [],
+      maxWeight,
+      currency,
+    };
+
+    if (!name || !destination || !date || !maxWeight || !currency) {
       setText("Please fill out all fields");
     } else {
-        const id = await notebookTable.add(newNotebook);
-        localStorage.setItem("notebook", JSON.stringify(id));
-        setNotebook(newNotebook);
+      const id = await notebookTable.add(newNotebook);
+      localStorage.setItem("notebook", JSON.stringify(id));
+      setNotebook(newNotebook);
       setName("");
       setDestination("");
       setDate(null);
     }
   };
-  
+
   return (
     <div className="flex flex-col justify-center items-center mt-12">
       <div className="mb-8">
@@ -74,6 +75,26 @@ const CreateNote = ({ setNotebook }: Notebook) => {
               <FaCalendarAlt className="text-gray-500" />
             </div>
           </div>
+        <input
+          type="number"
+          placeholder="maximun weight"
+          value={maxWeight}
+          onChange={(e) => setMaxWeight(e.target.value)}
+          className="border border-gray-400 rounded-lg px-4 py-2 mb-2 w-64"
+          required
+        />
+        <select
+          value={currency}
+          onChange={(e) => setCurrency(e.target.value)}
+          className="border border-gray-400 rounded-lg px-4 py-2 mb-2 w-64"
+        >
+          <option value="">Choose Currency</option>
+          {currencies?.map((currency: string) => (
+            <option key={currency} value={currency}>
+              {currency}
+            </option>
+          ))}
+        </select>
         </div>
         <div className="flex justify-center items-center mt-5">
           <button

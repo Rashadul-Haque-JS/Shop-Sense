@@ -1,4 +1,5 @@
 module.exports = {
+  purge: ['./src/**/*.{js,ts,jsx,tsx}', './public/index.html'],
   content: [
     './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
@@ -11,9 +12,8 @@ module.exports = {
       'lg': {'min': '992px', 'max': '1199.98px'},
       'xl': {'min': '1200px'},
       '2xl': {'min': '1400px'},
-     
     },
     extend: {},
   },
   plugins: [],
-}
+};
