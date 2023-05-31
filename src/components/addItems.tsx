@@ -3,6 +3,7 @@ import { notebookTable } from "@/database.config";
 import Link from "next/link";
 import { FiDownload, FiTrash } from "react-icons/fi";
 import Image from "next/image";
+
 interface NoteProps {
   [key: string]: any;
 }
@@ -14,9 +15,11 @@ interface Notebook {
 
 const AddItems = ({ notebook, setNotebook }: Notebook) => {
   const [itemName, setItemName] = useState("");
-  const [itemWeight, setItemWeight] = useState<number | string>(0);
+  const [itemWeight, setItemWeight] = useState<number | string>();
   const [unit, setUnit] = useState("kg");
   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+  const [itemPrice, setItemPrice] = useState<number | string>();
+  const [text, setText] = useState("");
 
   // Rest of your code...
 
@@ -58,9 +61,15 @@ const AddItems = ({ notebook, setNotebook }: Notebook) => {
   const maxWeight = notebook.maxWeight; // Define maximum weight limit
 
   const addItem = async () => {
+    if (!itemName || !itemWeight || !itemPrice) {
+        setText("Please fill out all fields");
+        return;
+    }
+
     const newItem = {
       name: itemName,
       weight: convertWeightToKg(itemWeight),
+      price: itemPrice,
     };
     await notebookTable.update(notebook.id, {
       items: [...(notebook?.items ?? []), newItem],
@@ -71,13 +80,7 @@ const AddItems = ({ notebook, setNotebook }: Notebook) => {
     setUnit("kg");
   };
 
-  const deleteItem = async (item: any) => {
-    const updatedItems = notebook?.items.filter(
-      (notebookItem: any) => notebookItem.name !== item.name
-    );
-    await notebookTable.update(notebook.id, { items: updatedItems });
-    setNotebook({ ...notebook, items: updatedItems });
-  };
+  
 
   const downloadNotebook = async () => {
     const blob = new Blob([JSON.stringify(notebook)], { type: "text/plain" });
@@ -153,7 +156,6 @@ const AddItems = ({ notebook, setNotebook }: Notebook) => {
                     <span className="font-semibold">Allowed</span>
                     <span className="block">{notebook?.maxWeight} kg</span>
                   </p>
-                  
                 </div>
                 <div className="flex flex-col justify-between shadow-md p-4">
                   <p className="text-center">
@@ -174,7 +176,7 @@ const AddItems = ({ notebook, setNotebook }: Notebook) => {
                   </p>
                 </div>
                 <div className="flex flex-col justify-between shadow-md p-4">
-                <p className="text-center">
+                  <p className="text-center">
                     <span className="font-semibold">Date</span>
                     <span className="block">{notebook?.date}</span>
                   </p>
@@ -196,6 +198,7 @@ const AddItems = ({ notebook, setNotebook }: Notebook) => {
               </div>
 
               <div className="flex flex-col p-5 shadow-md xs:mt-8 sm:mt-8">
+              {text && <small className="my-5 text-center w-64">* {text}</small>}
                 <input
                   type="text"
                   placeholder="Item Name"
@@ -219,6 +222,13 @@ const AddItems = ({ notebook, setNotebook }: Notebook) => {
                   <option value="g">g</option>
                   <option value="ml">ml</option>
                 </select>
+                <input
+                  type="number"
+                  placeholder="Item price"
+                  value={itemPrice}
+                  onChange={(e) => setItemPrice(e.target.value)}
+                  className="border border-gray-400 rounded-lg px-4 py-2 mb-2 w-80"
+                />
                 <button
                   onClick={addItem}
                   className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 my-4 w-80"
