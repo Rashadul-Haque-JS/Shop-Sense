@@ -1,7 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 
 const IndexPage = () => {
+  const [notebook, setNotebook] = useState<any>();
   return (
     <div className="flex flex-col justify-start items-center gap-5 sm:gap-3 h-full mt-12">
       <div className="mb-8">
@@ -15,7 +17,7 @@ const IndexPage = () => {
       </div>
       <div className="flex justify-center">
         <Link
-          href="/add/addItems"
+          href="/notebooks/notebooks"
           passHref
           className="flex items-center justify-center bg-black text-white px-4 py-2 rounded-full   hover:bg-blue-600"
         >
@@ -31,7 +33,7 @@ const IndexPage = () => {
               clipRule="evenodd"
             />
           </svg>
-          <span >Create Notebook</span>
+          <span >Start Tracking</span>
         </Link>
       </div>
     </div>
