@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { notebookTable } from "@/database.config";
 import Link from "next/link";
-import { FiDownload, FiTrash } from "react-icons/fi";
+import { FiDownload, FiList, FiTrash } from "react-icons/fi";
 import Image from "next/image";
 
 interface NoteProps {
@@ -52,7 +52,7 @@ const AddItems = ({ notebook, setNotebook }: Notebook) => {
 
   const calculateTotalWeight = (): number => {
     let totalWeight = 0;
-    notebook?.items.forEach((item: any) => {
+    notebook?.items.forEach((item: NoteProps) => {
       totalWeight += item.weight;
     });
     return totalWeight;
@@ -123,6 +123,10 @@ const AddItems = ({ notebook, setNotebook }: Notebook) => {
         >
           <FiDownload /> Download
         </button>
+        <Link href="/my-purchase" className="flex items-center gap-2 px-3 py-1 text-white bg-stone-950 rounded hover:bg-red-600"
+        >
+          <FiList /> List
+        </Link>
         <button
           onClick={openDeleteConfirmation}
           className="flex items-center gap-2 px-3 py-1 text-white bg-red-500 rounded hover:bg-red-600"
@@ -244,13 +248,14 @@ const AddItems = ({ notebook, setNotebook }: Notebook) => {
             <p className="text-red-500 text-center">
               Maximum weight limit reached. Cannot add more items.
             </p>
-            <div className="flex justify-center items-center">
+            <div className="flex justify-center items-center gap-2">
               <Link
                 className="text-center text-blue-500 py-5"
                 href="/my-purchase"
               >
-                Delete individual Item
+                Delete
               </Link>
+              Individual Item
             </div>
           </div>
         )}

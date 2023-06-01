@@ -4,6 +4,9 @@ import { NoteProps } from "@/types/types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { useRouter } from "next/router";
+import { FiPlus} from "react-icons/fi";
+import Link from "next/link";
+
 
 const MyPurchase = () => {
   const [notebook, setNotebook] = useState<NoteProps>({});
@@ -62,6 +65,12 @@ const MyPurchase = () => {
  
   return (
     <div className="w-full">
+        <div className="flex justify-center items-center">
+         <Link href="/notebooks/notebooks" className="w-fit flex items-center px-3 py-1 text-4xl text-black bg-none rounded hover:bg-gray-400"
+        >
+          <FiPlus />
+        </Link>
+        </div>
       <h1 className="text-center font-semibold py-6 mb-6 uppercase">My Purchase</h1>
       <div className="flex justify-center">
         <table className="w-3/4 border-collapse border border-gray-300">
