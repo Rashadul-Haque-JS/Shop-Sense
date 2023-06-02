@@ -83,8 +83,8 @@ const MyPurchase = () => {
             </tr>
           </thead>
           <tbody>
-            {notebook?.items?.map((item: NoteProps) => (
-              <tr key={item.id}>
+            {notebook?.items?.map((item: NoteProps,index:number) => (
+              <tr key={index}>
                 <td className="py-2 px-4 border-b text-center">{item.name}</td>
                 <td className="py-2 px-4 border-b text-center">{item.weight}</td>
                 <td className="py-2 px-4 border-b text-center">{item.price}</td>
