@@ -1,73 +1,143 @@
-
 import { NoteProps } from "@/types/types";
-const downloadNotebook = (notebook:NoteProps) => {
-    const notebookList = JSON.parse(JSON.stringify(notebook));;
-    const htmlContent = `
-      <!DOCTYPE html>
-      <html>
-        <head>
-          <style>
-          body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-          }
-            .notebook-list {
-              font-family: Arial, sans-serif;
-              width: 500px;
-              min-height: 800;
-              margin-top: 20px;
-              background-color: #gray;
-            }
+const downloadNotebook = (notebook: NoteProps) => {
+  const notebookList = JSON.parse(JSON.stringify(notebook));
+  const htmlContent = `
+    <!DOCTYPE html>
+    <html>
+      <head>
+      <style>
+      body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background-color: #04F8AF;
+        padding: 20px;
+      }
     
-            .notebook-list h2 {
-              font-size: 20px;
-              font-weight: bold;
-              margin-bottom: 10px;
-            }
+      body h1 {
+        font-family: "Montserrat", sans-serif;
+        font-size: 24px;
+        font-weight: bold;
+        margin-top: 40px;
+        margin-bottom: 16px;
+        text-align: center;
+      }
     
-            .notebook-item {
-              list-style-type: none;
-              margin-bottom: 5px;
-            }
+      body p {
+        text-align: center;
+        width: fit-content;
+      }
     
-            .item-name {
-              font-weight: bold;
-              margin-right: 10px;
-            }
+      .notebook-list {
+        position: relative;
+        width: 90%;
+        max-width: 400px;
+        min-height: 480px;
+        margin-top: 20px;
+        background-color: #ffffff;
+        padding: 20px;
+        box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+      }
     
-            .item-price {
-              color: green;
-            }
-          </style>
-        </head>
-        <body>
-          <div class="notebook-list">
-            <h2>${notebookList?.name}</h2>
-            <ul>
+      .notebook-list h2 {
+        font-size: 20px;
+        font-weight: bold;
+        margin-bottom: 10px;
+        text-align: center;
+      }
+    
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+    
+      th,
+      td {
+        border-top: 1px solid #ccc;
+        border-bottom: 1px solid #ccc;
+        padding: 10px;
+        text-align: left;
+      }
+    
+      .item-name {
+        font-weight: bold;
+        margin-right: 10px;
+      }
+    
+      .item-price {
+        color: green;
+      }
+    
+      .dest-date {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 0.5em;
+        padding: 0.5em;
+      }
+    
+      .dest-date .bullet {
+        width: 10px;
+        height: 10px;
+        background-color: #000;
+        margin: 0 10px;
+      }
+
+      .notebook-list small {
+        position: absolute;
+        bottom: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 12px;
+        color: #666666;
+      }
+    </style>
+    
+      </head>
+      <body>
+          <h1>Travel Shopping Details</h1>
+        <div class="notebook-list">
+          <h2>${notebookList?.name}</h2>
+          <div class ="dest-date">
+          <p>${notebookList?.destination}</p>
+          <p class="bullet"> </p>
+          <p>${notebookList?.date}</p>
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Weight</th>
+                <th>Price</th>
+              </tr>
+            </thead>
+            <tbody>
               ${notebookList?.items
                 .map(
-                  (item:NoteProps) => `
-                    <li class="notebook-item">
-                      <span class="item-name">${item.name}</span>
-                      <span class="item-name">${item.weight}</span>
-                      <span class="item-price">${Number(item.price).toFixed(2)}</span>
-                    </li>
+                  (item: NoteProps) => `
+                    <tr>
+                      <td>${item.name}</td>
+                      <td>${item.weight}</td>
+                      <td>${Number(item.price).toFixed(2)}</td>
+                    </tr>
                   `
                 )
                 .join("")}
-            </ul>
-          </div>
-        </body>
-      </html>
-    `;
-  
-    const blob = new Blob([htmlContent], { type: "text/html" });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement("a");
-    link.download = `${notebook?.name}.html`;
-    link.href = url;
-    link.click();
-  };
-  
-  export default downloadNotebook;
+            </tbody>
+          </table>
+          <small>${notebook?.id}</small>
+        </div>
+      </body>
+    </html>
+  `;
+
+  const blob = new Blob([htmlContent], { type: "text/html" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.download = `${notebook?.name}.html`;
+  link.href = url;
+  link.click();
+};
+
+export default downloadNotebook;
