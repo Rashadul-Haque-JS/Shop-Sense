@@ -1,7 +1,7 @@
 {
     "name": "Shop Sense",
     "description": "Track shopping expenses and weight before travel to reduce expnses.",
-    "short_name": "SS",
+    "short_name": "Shop Sense",
     "icons": [
       {
         "src": "/icons/favicon-16x16.png",
