@@ -19,7 +19,7 @@ const downloadNotebook = (notebook: NoteProps) => {
         font-family: "Montserrat", sans-serif;
         font-size: 24px;
         font-weight: bold;
-        margin-top: 40px;
+        margin-top: 32px;
         margin-bottom: 16px;
         text-align: center;
       }
@@ -92,10 +92,31 @@ const downloadNotebook = (notebook: NoteProps) => {
         font-size: 12px;
         color: #666666;
       }
+
+      .text-logo-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: fit-content;
+        margin:0;
+      }
+      .text-logo{
+        font-family: "Montserrat", sans-serif;
+        font-size:16px;
+        font-weight:bold;
+        padding:20px;
+        margin-bottom:0;
+        color: #fff;
+        text-align: center;
+        text-transform: uppercase;
+      }
     </style>
     
       </head>
       <body>
+         <div class="text-logo-wrapper">
+          <h1 class="text-logo">Shop Sense</h1>
+         </div>
           <h1>Travel Shopping Details</h1>
         <div class="notebook-list">
           <h2>${notebookList?.name}</h2>

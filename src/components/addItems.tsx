@@ -4,6 +4,8 @@ import Link from "next/link";
 import { FiDownload, FiList, FiTrash } from "react-icons/fi";
 import Image from "next/image";
 import downloadNotebook from "@/utils/downloadNote";
+import { useRouter } from "next/router";
+import {toast} from "react-toastify";
 
 interface NoteProps {
   [key: string]: any;
@@ -22,6 +24,7 @@ const AddItems = ({ notebook, setNotebook }: Notebook) => {
   const [itemPrice, setItemPrice] = useState<number | string>();
   const [text, setText] = useState("");
   const [isMaximum, setIsMaximum] = useState(false);
+  const router= useRouter();
 
   // Rest of your code...
 
@@ -87,7 +90,16 @@ const AddItems = ({ notebook, setNotebook }: Notebook) => {
     setItemName("");
     setItemWeight(0);
     setUnit("kg");
+    setItemPrice(0);
   };
+
+  const listRouter = ()=>{
+    if(notebook?.items?.length){
+      router.push("/my-purchase")
+    }else{
+      toast.info("You have no item added yet")
+    }
+  }
 
   return (
     <>
@@ -121,10 +133,10 @@ const AddItems = ({ notebook, setNotebook }: Notebook) => {
         >
           <FiDownload /> Download
         </button>
-        <Link href="/my-purchase" className="flex items-center gap-2 px-3 py-1 text-white bg-stone-950 rounded hover:bg-red-600"
+        <button className="flex items-center gap-2 px-3 py-1 text-white bg-stone-950 rounded hover:bg-red-600" onClick={listRouter}
         >
           <FiList /> List
-        </Link>
+        </button>
         <button
           onClick={openDeleteConfirmation}
           className="flex items-center gap-2 px-3 py-1 text-white bg-red-500 rounded hover:bg-red-600"
