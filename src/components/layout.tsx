@@ -8,7 +8,7 @@ const Layout = ({ children }: any) => {
 
   return (
     <div className="h-full">
-      <div className="flex justify-center items-center w-full shadow-sm mb-4 pt-4">
+      <div className="flex justify-center items-center w-full shadow-sm mb-4 py-3">
         <Link href={"/"} className="flex justify-center items-center  w-fit">
           <Image
             src="/images/shop-senses.png"

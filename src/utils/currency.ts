@@ -1,4 +1,4 @@
-export const currencies = [
+const currenciesCode = [
     "AED",
     "ARS",
     "AUD",
@@ -49,3 +49,13 @@ export const currencies = [
     "ZAR"
   ]
   
+  const currencies = ()=>{
+      return currenciesCode.map((currency)=>{
+          return {
+          value: currency,
+          label: currency
+          }
+      })
+  }
+
+  export default currencies

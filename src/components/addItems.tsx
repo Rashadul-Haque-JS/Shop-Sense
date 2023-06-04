@@ -245,7 +245,7 @@ const AddItems = ({ notebook, setNotebook }: Notebook) => {
                 />
                 <button
                   onClick={addItem}
-                  className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 my-4 w-80"
+                  className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 my-4 w-80 font-semibold"
                 >
                   Add Item
                 </button>
