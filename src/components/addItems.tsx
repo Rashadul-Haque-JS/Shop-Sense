@@ -97,7 +97,7 @@ const AddItems = ({ notebook, setNotebook }: Notebook) => {
     if(notebook?.items?.length){
       router.push("/my-purchase")
     }else{
-      toast.info("You have no item added yet")
+      toast.info("Your shopping list is empty")
     }
   }
 
