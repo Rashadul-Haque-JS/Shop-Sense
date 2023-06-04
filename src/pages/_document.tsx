@@ -16,8 +16,8 @@ class MyDocument extends Document {
           <meta name="description" content="Track shopping expenses and weight before travel." />
           <meta name="apple-mobile-web-app-capable" content="yes" />
           <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-          <meta name="apple-mobile-web-app-title" content="Expense Escape" />
-          <meta name="application-name" content="Expense Escape" />
+          <meta name="apple-mobile-web-app-title" content="Shop Sense" />
+          <meta name="application-name" content="Shop Sense" />
           <meta name="msapplication-TileColor" content="#f69435" />
           <meta name="msapplication-TileImage" content="/icons/icon-144x144.png" />
           <link rel="apple-touch-icon" sizes="192x192" href="/icons/icon-192x192.png" />
