@@ -4,6 +4,8 @@ import { NoteProps } from "@/types/types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { useRouter } from "next/router";
+import { FiPlus } from "react-icons/fi";
+import Link from "next/link";
 
 const MyPurchase = () => {
   const [notebook, setNotebook] = useState<NoteProps>({});
@@ -27,7 +29,7 @@ const MyPurchase = () => {
     };
     fetchNotebook();
 
-    if(notebook?.items?.length === 0) {
+    if (notebook?.items?.length === 0) {
       router.push("/notebooks/notebooks");
     }
     totalPrices(notebook?.items);
@@ -59,12 +61,22 @@ const MyPurchase = () => {
       setTotalPrice(0);
     }
   };
- 
+
   return (
     <div className="w-full">
-      <h1 className="text-center font-semibold py-6 mb-6 uppercase">My Purchase</h1>
-      <div className="flex justify-center">
-        <table className="w-3/4 border-collapse border border-gray-300">
+      <div className="flex justify-center items-center">
+        <Link
+          href="/notebooks/notebooks"
+          className="w-fit flex items-center px-3 py-1 text-4xl text-black bg-none rounded hover:bg-gray-400"
+        >
+          <FiPlus />
+        </Link>
+      </div>
+      <h1 className="text-center font-semibold py-6 mb-6 uppercase">
+        My Purchase
+      </h1>
+      <div className="flex justify-center overflow-x-auto">
+        <table className="w-full table-auto border-collapse border border-gray-300">
           <thead>
             <tr>
               <th className="py-2 px-4 border-b">Item</th>
@@ -74,9 +86,9 @@ const MyPurchase = () => {
             </tr>
           </thead>
           <tbody>
-            {notebook?.items?.map((item: NoteProps) => (
-              <tr key={item.id}>
-                <td className="py-2 px-4 border-b text-center">{item.name}</td>
+            {notebook?.items?.map((item: NoteProps, index: number) => (
+              <tr key={index}>
+                <td className="py-2 px-4 border-b text-center capitalize">{item.name}</td>
                 <td className="py-2 px-4 border-b text-center">{item.weight}</td>
                 <td className="py-2 px-4 border-b text-center">{item.price}</td>
                 <td className="py-2 px-4 border-b text-center">
@@ -86,16 +98,18 @@ const MyPurchase = () => {
                   />
                 </td>
               </tr>
-
             ))}
             <tr>
-                <td className="py-2 px-4 border-b text-center">Total:</td>
-                <td className="py-2 px-4 border-b text-center font-semibold">{totalWeight}</td>
-                <td className="py-2 px-4 border-b text-center font-semibold">{totalPrice}</td>
+              <td className="py-2 px-4 border-b text-center">Total:</td>
+              <td className="py-2 px-4 border-b text-center font-semibold">
+                {totalWeight}
+              </td>
+              <td className="py-2 px-4 border-b text-center font-semibold">
+                {totalPrice}
+              </td>
             </tr>
           </tbody>
         </table>
-
       </div>
     </div>
   );

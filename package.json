@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.4.0",
     "@fortawesome/free-solid-svg-icons": "^6.4.0",
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@types/node": "20.2.5",
@@ -22,17 +23,21 @@
     "feather-icons-react": "^0.6.2",
     "idb": "^7.1.1",
     "next": "13.4.4",
+    "next-offline": "^5.0.5",
+    "next-pwa": "^5.6.0",
     "postcss": "8.4.24",
     "react": "18.2.0",
     "react-datepicker": "^4.12.0",
     "react-dom": "18.2.0",
     "react-icons": "^4.9.0",
+    "react-select": "^5.7.3",
     "tailwindcss": "3.3.2",
     "typescript": "5.0.4",
     "uuid": "^9.0.0"
   },
   "devDependencies": {
     "@types/react-datepicker": "^4.11.2",
-    "@types/uuid": "^9.0.1"
+    "@types/uuid": "^9.0.1",
+    "react-toastify": "^9.1.3"
   }
 }

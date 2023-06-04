@@ -1,8 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { notebookTable } from "@/database.config";
 import Link from "next/link";
-import { FiDownload, FiTrash } from "react-icons/fi";
+import { FiDownload, FiList, FiTrash } from "react-icons/fi";
 import Image from "next/image";
+import downloadNotebook from "@/utils/downloadNote";
+import { useRouter } from "next/router";
+import {toast} from "react-toastify";
 
 interface NoteProps {
   [key: string]: any;
@@ -20,6 +23,8 @@ const AddItems = ({ notebook, setNotebook }: Notebook) => {
   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
   const [itemPrice, setItemPrice] = useState<number | string>();
   const [text, setText] = useState("");
+  const [isMaximum, setIsMaximum] = useState(false);
+  const router= useRouter();
 
   // Rest of your code...
 
@@ -52,18 +57,25 @@ const AddItems = ({ notebook, setNotebook }: Notebook) => {
 
   const calculateTotalWeight = (): number => {
     let totalWeight = 0;
-    notebook?.items.forEach((item: any) => {
+    notebook?.items.forEach((item: NoteProps) => {
       totalWeight += item.weight;
     });
     return totalWeight;
   };
 
-  const maxWeight = notebook.maxWeight; // Define maximum weight limit
 
   const addItem = async () => {
     if (!itemName || !itemWeight || !itemPrice) {
         setText("Please fill out all fields");
         return;
+    }
+
+    const totalWeight= notebook?.maxWeight < (calculateTotalWeight() + Number(itemWeight));
+    if(totalWeight){
+        setIsMaximum(true)
+        return
+    }else{
+        setIsMaximum(false)
     }
 
     const newItem = {
@@ -78,18 +90,16 @@ const AddItems = ({ notebook, setNotebook }: Notebook) => {
     setItemName("");
     setItemWeight(0);
     setUnit("kg");
+    setItemPrice(0);
   };
 
-  
-
-  const downloadNotebook = async () => {
-    const blob = new Blob([JSON.stringify(notebook)], { type: "text/plain" });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement("a");
-    link.download = `${notebook.name}.json`;
-    link.href = url;
-    link.click();
-  };
+  const listRouter = ()=>{
+    if(notebook?.items?.length){
+      router.push("/my-purchase")
+    }else{
+      toast.info("You have no item added yet")
+    }
+  }
 
   return (
     <>
@@ -118,10 +128,14 @@ const AddItems = ({ notebook, setNotebook }: Notebook) => {
       )}
       <div className="flex justify-center items-center gap-4 py-3 transform translate-y-[-20px]">
         <button
-          onClick={downloadNotebook}
+          onClick={()=>{downloadNotebook(notebook)}}
           className="flex items-center gap-2 px-3 py-1 text-white bg-blue-500 rounded hover:bg-blue-600"
         >
           <FiDownload /> Download
+        </button>
+        <button className="flex items-center gap-2 px-3 py-1 text-white bg-stone-950 rounded hover:bg-red-600" onClick={listRouter}
+        >
+          <FiList /> List
         </button>
         <button
           onClick={openDeleteConfirmation}
@@ -132,7 +146,7 @@ const AddItems = ({ notebook, setNotebook }: Notebook) => {
       </div>
 
       <div className="flex justify-center w-full mb-4">
-        {calculateTotalWeight() < maxWeight && (
+        {!isMaximum && (
           <div className="grid grid-cols-1 gap-10">
             <h2 className="text-xl font-bold text-center uppercase my-10 xs:my-0 sm:my-0">
               Add Items
@@ -209,7 +223,7 @@ const AddItems = ({ notebook, setNotebook }: Notebook) => {
                 <input
                   type="number"
                   placeholder="Item Weight"
-                  value={itemWeight}
+                  value={itemWeight || ''}
                   onChange={(e) => setItemWeight(e.target.value)}
                   className="border border-gray-400 rounded-lg px-4 py-2 mb-2 w-80"
                 />
@@ -225,13 +239,13 @@ const AddItems = ({ notebook, setNotebook }: Notebook) => {
                 <input
                   type="number"
                   placeholder="Item price"
-                  value={itemPrice}
+                  value={itemPrice || ''}
                   onChange={(e) => setItemPrice(e.target.value)}
                   className="border border-gray-400 rounded-lg px-4 py-2 mb-2 w-80"
                 />
                 <button
                   onClick={addItem}
-                  className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 my-4 w-80"
+                  className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 my-4 w-80 font-semibold"
                 >
                   Add Item
                 </button>
@@ -239,18 +253,22 @@ const AddItems = ({ notebook, setNotebook }: Notebook) => {
             </div>
           </div>
         )}
-        {calculateTotalWeight() >= maxWeight && (
+        {isMaximum && (
           <div>
             <p className="text-red-500 text-center">
-              Maximum weight limit reached. Cannot add more items.
+                <span className="text-xl font-bold " style={{textDecoration:'underline'}}>Notification</span>
+                <span className="block text-black py-10">
+                You can add {notebook?.maxWeight - calculateTotalWeight()} kg
+                </span>
             </p>
-            <div className="flex justify-center items-center">
+            <div className="flex justify-center items-center gap-2">
               <Link
                 className="text-center text-blue-500 py-5"
                 href="/my-purchase"
               >
-                Delete individual Item
+                Delete
               </Link>
+              Individual Item
             </div>
           </div>
         )}
