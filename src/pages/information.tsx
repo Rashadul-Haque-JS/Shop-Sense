@@ -45,7 +45,7 @@ const Information = () => {
           }`}
           onClick={handleToggleUsages}
         >
-          Usages
+          Usage
         </button>
         <button
           className={`bg-none border-[#305381]  py-1 rounded-md rounded-l-none ${
