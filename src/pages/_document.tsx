@@ -12,13 +12,13 @@ class MyDocument extends Document {
         <Head>
           <link rel="manifest" href="/manifest.json" />
           <link rel="icon" href="/favicon.ico" />
-          <meta name="theme-color" content="#f69435" />
+          <meta name="theme-color" content="#04F8AF" />
           <meta name="description" content="Track shopping expenses and weight before travel." />
           <meta name="apple-mobile-web-app-capable" content="yes" />
           <meta name="apple-mobile-web-app-status-bar-style" content="default" />
           <meta name="apple-mobile-web-app-title" content="Shop Sense" />
           <meta name="application-name" content="Shop Sense" />
-          <meta name="msapplication-TileColor" content="#f69435" />
+          <meta name="msapplication-TileColor" content="#04F8AF" />
           <meta name="msapplication-TileImage" content="/icons/icon-144x144.png" />
           <link rel="apple-touch-icon" sizes="192x192" href="/icons/icon-192x192.png" />
           <link rel="apple-touch-icon" sizes="256x256" href="/icons/icon-256x256.png" />
