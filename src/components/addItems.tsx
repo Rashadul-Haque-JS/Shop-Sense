@@ -70,7 +70,7 @@ const AddItems = ({ notebook, setNotebook }: Notebook) => {
         return;
     }
 
-    const totalWeight= notebook?.maxWeight < (calculateTotalWeight() + Number(itemWeight));
+    const totalWeight= notebook?.maxWeight < (calculateTotalWeight() + Number(convertWeightToKg(itemWeight)));
     if(totalWeight){
         setIsMaximum(true)
         return
