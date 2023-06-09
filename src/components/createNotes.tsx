@@ -53,7 +53,7 @@ const CreateNote = ({ setNotebook }: Notebook) => {
   return (
     <div className="flex flex-col justify-center items-center mt-12">
       <div className="mb-8">
-        <h2 className="text-xl font-bold text-center mb-8">Create Notebook</h2>
+        <h2 className="text-xl font-bold text-center mb-8">Create Trackbook</h2>
         {text && <small className="my-5 text-center w-80">* {text}</small>}
         <div className="flex flex-col justify-center items-center gap-3">
           <input
