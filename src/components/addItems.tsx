@@ -91,7 +91,7 @@ const AddItems = ({ notebook, setNotebook }: Notebook) => {
     setItemWeight(0);
     setUnit("kg");
     setItemPrice(0);
-    toast.success
+    toast.success("Item added successfully")
   };
 
   const listRouter = ()=>{
