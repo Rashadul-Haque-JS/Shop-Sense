@@ -1,9 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+
 
 const IndexPage = () => {
-  const [notebook, setNotebook] = useState<any>();
+  
   return (
     <div className="flex flex-col justify-start items-center gap-5 sm:gap-3 h-full mt-12">
       <div className="mb-8">
