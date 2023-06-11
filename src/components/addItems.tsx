@@ -41,6 +41,7 @@ const AddItems = ({ notebook, setNotebook }: Notebook) => {
     await notebookTable.delete(notebook.id);
     setNotebook({});
     localStorage.removeItem("notebook");
+    toast.success("Notebook deleted successfully")
   };
 
   const convertWeightToKg = (weight: number | string): number => {
@@ -86,11 +87,11 @@ const AddItems = ({ notebook, setNotebook }: Notebook) => {
     await notebookTable.update(notebook.id, {
       items: [...(notebook?.items ?? []), newItem],
     });
-    console.log("updated");
     setItemName("");
     setItemWeight(0);
     setUnit("kg");
     setItemPrice(0);
+    toast.success
   };
 
   const listRouter = ()=>{
