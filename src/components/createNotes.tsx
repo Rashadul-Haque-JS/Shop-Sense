@@ -20,8 +20,12 @@ const CreateNote = ({ setNotebook }: Notebook) => {
   const [maxWeight, setMaxWeight] = useState<number | string>();
   const [currency, setCurrency] = useState<string>();
   const [text, setText] = useState("");
-  const [currenciesOptions, setCurrenciesOptions] = useState<Option[]>(currencies());
-  const [destinationOptions, setDestinationOptions] = useState<Option[]>(destinations());
+  const [currenciesOptions, setCurrenciesOptions] = useState<Option[]>(
+    currencies()
+  );
+  const [destinationOptions, setDestinationOptions] = useState<Option[]>(
+    destinations()
+  );
 
   const createNotebook = async () => {
     setText("");
@@ -47,9 +51,6 @@ const CreateNote = ({ setNotebook }: Notebook) => {
     }
   };
 
-
-
-  
   return (
     <div className="flex flex-col justify-center items-center mt-12">
       <div className="mb-8">
@@ -66,17 +67,24 @@ const CreateNote = ({ setNotebook }: Notebook) => {
           />
           <Select
             options={destinationOptions}
-            value={destination ? { value: destination, label: destination } : null}
+            value={
+              destination ? { value: destination, label: destination } : null
+            }
             onChange={(selectedOption) => setDestination(selectedOption?.value)}
             placeholder="Select Destination"
             styles={{
-              control: (provided) => ({ ...provided }),
+              control: (provided) => ({
+                ...provided,
+                borderRadius: "0.5rem", 
+                paddingTop: "0.2rem", 
+                paddingBottom: "0.2rem", 
+              }),
               placeholder: (provided) => ({
                 ...provided,
-                paddingLeft: '8px',
+                paddingLeft: "8px",
               }),
             }}
-            className="w-80 "
+            className="w-80"
           />
           <div className="relative w-80">
             <DatePicker
@@ -99,26 +107,30 @@ const CreateNote = ({ setNotebook }: Notebook) => {
           />
           <Select
             options={currenciesOptions}
-            value={currency ? { value: currency, label: currency} : null}
+            value={currency ? { value: currency, label: currency } : null}
             onChange={(selectedOption) => setCurrency(selectedOption?.value)}
             placeholder="Select Shopping Currency"
             styles={{
-              control: (provided) => ({ ...provided }),
+              control: (provided) => ({
+                ...provided,
+                borderRadius: "0.5rem", // Apply rounded corners
+                paddingTop: "0.2rem", // Increase top padding
+                paddingBottom: "0.2rem", // Increase bottom padding
+              }),
               placeholder: (provided) => ({
                 ...provided,
-                paddingLeft: '8px',
+                paddingLeft: "8px",
               }),
             }}
             className="w-80"
           />
-         
         </div>
         <div className="flex justify-center items-center mt-5">
           <button
             onClick={createNotebook}
             className="bg-blue-500 text-white px-4 py-2 font-semibold rounded-lg shadow-md hover:bg-blue-600 w-80"
           >
-            Create 
+            Create
           </button>
         </div>
       </div>
