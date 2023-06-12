@@ -78,6 +78,7 @@ const CreateNote = ({ setNotebook }: Notebook) => {
                 borderRadius: "0.5rem", 
                 paddingTop: "0.1rem", 
                 paddingBottom: "0.1rem", 
+                marginBottom: "0.5rem",
               }),
               placeholder: (provided) => ({
                 ...provided,
