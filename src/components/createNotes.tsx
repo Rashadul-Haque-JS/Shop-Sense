@@ -76,8 +76,8 @@ const CreateNote = ({ setNotebook }: Notebook) => {
               control: (provided) => ({
                 ...provided,
                 borderRadius: "0.5rem", 
-                paddingTop: "0.2rem", 
-                paddingBottom: "0.2rem", 
+                paddingTop: "0.1rem", 
+                paddingBottom: "0.1rem", 
               }),
               placeholder: (provided) => ({
                 ...provided,
@@ -114,8 +114,8 @@ const CreateNote = ({ setNotebook }: Notebook) => {
               control: (provided) => ({
                 ...provided,
                 borderRadius: "0.5rem", // Apply rounded corners
-                paddingTop: "0.2rem", // Increase top padding
-                paddingBottom: "0.2rem", // Increase bottom padding
+                paddingTop: "0.1rem", // Increase top padding
+                paddingBottom: "0.1rem", // Increase bottom padding
               }),
               placeholder: (provided) => ({
                 ...provided,
